@@ -1,0 +1,28 @@
+import pandas as pd
+from pandas import DataFrame, read_excel, read_csv
+from sqlalchemy import create_engine, MetaData, TEXT, Integer, Table, Column, ForeignKey
+from pandas.io import sql
+import MySQLdb
+import pandas
+
+##SQLAlchemy
+engine = create_engine('mysql+mysqldb://root:@localhost/test')
+conn = engine.raw_connection()
+
+#Using .read_csv
+csv_file = '/Users/hlow/Downloads/TechCrunchcontinentalUSA.csv'
+data = read_csv(csv_file, sep=',')
+
+#Pandas and Jupyter displays html data frame
+df = DataFrame(data)
+df = df.fillna(0)
+df = df.replace(to_replace = {'*':0, '#':0})
+#df = df.set_index('permalink')
+df
+
+
+table = engine.execute("CREATE TABLE Tech_Crunch(permalink varchar(200) not null primary key, company varchar(20), numEmps varchar(20), category varchar(20), city varchar(20), state varchar(20), fundedDate varchar(20), raisedAmt varchar(20), raisedCurrency varchar(20), round varchar(20));")
+#Using pandas IO to_sql()
+place = engine.execute(df.to_sql('Tech_Crunch', conn, flavor='mysql', schema=None, if_exists='replace', index=True, index_label=None, chunksize=None, dtype=None))
+
+conn.close()
