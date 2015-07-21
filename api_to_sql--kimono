@@ -1,0 +1,42 @@
+#https://github.com/Factual/factual-python-driver
+import json 
+import urllib
+import pandas as pd
+from pandas import DataFrame, read_excel
+from sqlalchemy import create_engine, MetaData, TEXT, Integer, Table, Column, ForeignKey
+from pandas.io import sql
+import MySQLdb
+import pandas
+
+
+##Basic
+
+key = 'xxx'
+token = 'xxx'
+
+#results = json.load(urllib.urlopen("https://www.kimonolabs.com/api/{YOUR_API_ID}?apikey={YOUR_API_KEY}"))
+
+##Limit and offset
+#https://www.kimonolabs.com/api/{API_ID}?apikey={YOUR_API_KEY}&kimlimit=1000
+#https://www.kimonolabs.com/api/{API_ID}?apikey={YOUR_API_KEY}&kimoffset=5000
+
+#data = json.load(urllib.urlopen("https://www.kimonolabs.com/api/2Mg4x6o8iN7DEQrO2Jx1xr7P3NngZbKI?apikey=lzXCYxNjdyUx03INLZntxgKZVNlO2mVe"))
+#data
+
+data = pandas.read_json(path_or_buf="https://www.kimonolabs.com/api/2Mg4x6o8iN7DEQrO2Jx1xr7P3NngZbKI?apikey=lzXCYxNjdyUx03INLZntxgKZVNlO2mVe", orient=None, typ='frame', dtype=True, convert_axes=True, convert_dates=True, keep_default_dates=True, numpy=False, precise_float=False, date_unit=None)
+
+#/Users/hlow/Downloads/kimonoData.csv 
+
+#Pandas and Jupyter displays html data frame
+df = DataFrame(data, columns=['PROPERTY1.HREF', 'PROPERTY1.TEXT'])
+#class pandas.DataFrame(data=None, index=None, columns=None, dtype=None, copy=False)
+#df = df.fillna(0)
+#df = df.replace(to_replace = {'*':0, '#':0})
+#df = df.set_index('permalink')
+df
+
+
+
+
+
+
