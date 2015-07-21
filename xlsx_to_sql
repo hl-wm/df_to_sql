@@ -10,7 +10,7 @@ engine = create_engine('mysql+mysqldb://root:@localhost/test')
 conn = engine.raw_connection()
 
 #Using .read_excel
-data = read_excel('/Users/hlow/Downloads/national_M2014_dl.xlsx', 'national_dl', index_col=None, na_values=['NA'])
+data = read_excel('xxx.xlsx', 'national_dl', index_col=None, na_values=['NA'])
 
 #Pandas and Jupyter displays html data frame
 df = DataFrame(data)
