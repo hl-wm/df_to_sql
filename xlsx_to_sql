@@ -1,0 +1,28 @@
+import pandas as pd
+from pandas import DataFrame, read_excel
+from sqlalchemy import create_engine, MetaData, TEXT, Integer, Table, Column, ForeignKey
+from pandas.io import sql
+import MySQLdb
+import pandas
+
+##SQLAlchemy
+engine = create_engine('mysql+mysqldb://root:@localhost/test')
+conn = engine.raw_connection()
+
+#Using .read_excel
+data = read_excel('/Users/hlow/Downloads/national_M2014_dl.xlsx', 'national_dl', index_col=None, na_values=['NA'])
+
+#Pandas and Jupyter displays html data frame
+df = DataFrame(data)
+df = df.fillna(0)
+df = df.replace(to_replace = {'*':0, '#':0})
+#df = df.set_index('OCC_CODE')
+df
+
+
+table = engine.execute("CREATE TABLE national_M2014_dl4(OCC_CODE varchar(20) not null primary key, OCC_TITLE varchar(200), OCC_GROUP varchar(40), TOT_EMP int, EMP_PRSE float, H_MEAN float, A_MEAN float, MEAN_PRSE float, H_PCT10 float, H_PCT25 float, H_MEDIAN float, H_PCT75 float, H_PCT90 float, A_PCT10 int, A_PCT25 int, A_MEDIAN int, A_PCT75 int, A_PCT90 int, ANNUAL boolean, HOURLY boolean);")
+
+#Using pandas IO to_sql()
+engine.execute(df.to_sql('national_M2014_dl4', conn, flavor='mysql', schema=None, if_exists='replace', index=True, index_label=None, chunksize=None, dtype=None))
+
+conn.close()
