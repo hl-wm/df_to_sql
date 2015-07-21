@@ -10,7 +10,7 @@ engine = create_engine('mysql+mysqldb://root:@localhost/test')
 conn = engine.raw_connection()
 
 #Using .read_csv
-csv_file = '/Users/hlow/Downloads/TechCrunchcontinentalUSA.csv'
+csv_file = 'xxx.csv'
 data = read_csv(csv_file, sep=',')
 
 #Pandas and Jupyter displays html data frame
